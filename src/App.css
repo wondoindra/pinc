@@ -22,27 +22,6 @@
   font-size: large;
 }
 
-.carouselImg {
-  max-height: 700px;
-}
-
-.carouselImg img {
-  filter: brightness(70%);
-}
-
-.jumbotronmargin {
-  margin-top: 5%;
-}
-
-.footermargin {
-  margin: 0px;
-  margin-top: 3%;
-}
-
-.pic-container {
-  margin-top: 5%;
-}
-
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -50,4 +29,8 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.navbar {
+  z-index: 2;
 }

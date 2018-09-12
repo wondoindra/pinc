@@ -1,14 +1,5 @@
 import React from "react";
-import {
-  Container,
-  Card,
-  Button,
-  CardImg,
-  CardTitle,
-  CardText,
-  CardDeck,
-  CardBody
-} from "reactstrap";
+import { Container, CardDeck } from "reactstrap";
 import Members from "../members/Members";
 
 const C = props => {

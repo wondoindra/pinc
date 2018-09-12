@@ -5,21 +5,23 @@ import {
   Button,
   CardImg,
   CardTitle,
-  CardText,
-  CardDeck,
-  CardBody
+  CardBody,
+  Row,
+  Col
 } from "reactstrap";
 
 class Members extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
     this.state = {
-      members: []
+      members: [],
+      page: 1
     };
   }
 
-  componentDidMount() {
-    fetch("https://reqres.in/api/users?page=1")
+  getUsers = URL => {
+    fetch(`https://reqres.in/api/users?${URL}`)
       .then(results => {
         return results.json();
       })
@@ -27,7 +29,7 @@ class Members extends Component {
         let members = data.data.map(list => {
           return (
             <Card body outline color="info" key={list.id}>
-              <CardImg src={list.avatar} />
+              <CardImg top width="50%" src={list.avatar} />
               <CardBody>
                 <CardTitle>
                   {" "}
@@ -39,10 +41,52 @@ class Members extends Component {
         });
         this.setState({ members: members });
       });
+  };
+
+  componentDidMount() {
+    this.getUsers();
   }
 
+  nextChange = async () => {
+    const page = await this.state.page;
+    await this.setState({ page: page + 1 });
+    await this.getUsers(`page=${this.state.page}`);
+  };
+
+  prevChange = async () => {
+    const page = await this.state.page;
+    await this.setState({ page: page - 1 });
+    await this.getUsers(`page=${this.state.page}`);
+  };
+
   render() {
-    return <div>{this.state.members}</div>;
+    return (
+      <Container>
+        <div>
+          <Row>
+            <Col sm={{ size: "auto", offset: 4 }}>
+              <Button
+                page={this.state.page}
+                color="primary"
+                onClick={this.prevChange}
+              >
+                Prev
+              </Button>
+            </Col>
+            <Col sm={{ size: "auto", offset: 1 }}>
+              <Button
+                page={this.state.page}
+                color="primary"
+                onClick={this.nextChange}
+              >
+                Next
+              </Button>
+            </Col>
+          </Row>
+          {this.state.members}
+        </div>
+      </Container>
+    );
   }
 }
 

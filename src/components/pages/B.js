@@ -12,7 +12,6 @@ import {
   Container
 } from "reactstrap";
 import axios from "axios";
-// import login from "../function";
 
 export default class B extends Component {
   constructor(props) {
@@ -45,8 +44,6 @@ export default class B extends Component {
       email: this.state.email,
       password: this.state.password
     };
-
-    // const log = await login(URL, data);
 
     await axios
       .post(URL, data)

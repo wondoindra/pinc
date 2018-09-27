@@ -5,8 +5,8 @@ import {
   Col,
   Container,
   Card,
-  CardBody,
-  CardTitle
+  CardTitle,
+  CardText
 } from "reactstrap";
 import ReactModal from "react-modal-resizable-draggable";
 
@@ -21,25 +21,41 @@ class A extends Component {
     };
   }
 
-  addModal = async () => {
-    await this.state.modals.push(this.state.index);
+  deleteModal = async index => {
+    delete this.state.modals[index];
+
     await this.setState({ modals: this.state.modals });
-    await console.log(this.state.modals);
+    this.mapModal();
+  };
+
+  mapModal = async () => {
     const modals = await this.state.modals.map((list, index) => {
       return (
         <ReactModal key={index} initWidth={300} initHeight={300} isOpen={true}>
-          <Card body className="text-center" inverse color="info">
-            <CardBody>
-              <CardTitle>{index + 1}</CardTitle>
-            </CardBody>
+          <Card inverse color="info">
+            <CardTitle>
+              <Button
+                className="float-right m-2"
+                onClick={() => this.deleteModal(index)}
+              >
+                Close
+              </Button>
+              <CardText className="text-center mt-3 ml-5">Modal</CardText>
+            </CardTitle>
           </Card>
-          <CardTitle body className="text-center">
-            Drag me
-          </CardTitle>
+          <CardText className="text-center mt-5">
+            Hold space below to drag
+          </CardText>
         </ReactModal>
       );
     });
     await this.setState({ modals: modals });
+  };
+
+  addModal = async () => {
+    await this.state.modals.push(this.state.index);
+    await this.setState({ modals: this.state.modals });
+    this.mapModal();
   };
 
   render() {
